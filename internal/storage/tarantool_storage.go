@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/FZambia/tarantool"
 	"reflect"
-	"webserver/model"
+	"webserver/internal/model"
 )
 
 type userResponse struct {

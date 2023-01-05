@@ -6,6 +6,7 @@ require github.com/sirupsen/logrus v1.9.0
 
 require (
 	github.com/FZambia/tarantool v0.3.1 // indirect
+	github.com/go-chi/chi/v5 v5.0.8 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect

@@ -1,6 +1,8 @@
 package storage
 
-import "webserver/model"
+import (
+	"webserver/internal/model"
+)
 
 type Storage interface {
 	Add(user *model.User) (uint64, error)

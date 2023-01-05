@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
-	"webserver/model"
+	"webserver/internal/model"
 )
 
 type InMemoryStorage struct {
@@ -17,18 +17,20 @@ func NewStorage() *InMemoryStorage {
 }
 
 func (ims *InMemoryStorage) Add(user *model.User) (uint64, error) {
+	ims.mu.Lock()
 	userID := uint64(rand.Int())
 	ims.storage[userID] = user
+	defer ims.mu.Unlock()
 
 	return userID, nil
 }
 
 func (ims *InMemoryStorage) Delete(userID uint64) error {
+	ims.mu.Lock()
 	_, ok := ims.storage[userID]
 	if !ok {
 		return fmt.Errorf("user with id %d not exists", userID)
 	}
-	ims.mu.Lock()
 	delete(ims.storage, userID)
 	defer ims.mu.Unlock()
 	return nil
@@ -44,14 +46,14 @@ func (ims *InMemoryStorage) FindByUserId(userID uint64) (*model.User, error) {
 }
 
 func (ims *InMemoryStorage) Update(userID uint64, user *model.User) error {
+	ims.mu.Lock()
 	_, ok := ims.storage[userID]
 	if !ok {
 		return fmt.Errorf("user with ID %d does not exist", userID)
 	}
 
-	ims.mu.Lock()
 	ims.storage[userID] = user
-	ims.mu.Lock()
+	ims.mu.Unlock()
 
 	return nil
 }
